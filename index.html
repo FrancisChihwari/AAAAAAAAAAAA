@@ -1,600 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ashley ❤️ Francis</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashley ❤️ Francis | Our Story</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --deep-pink: #c2185b;
+            --hot-pink: #ff4081;
+            --soft-pink: #fce4ec;
+            --glass-bg: rgba(255, 255, 255, 0.95);
+            --text-dark: #2d3436;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; scroll-behavior: smooth; }
 
-<style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-    scroll-behavior:smooth;
-}
+        body {
+            background: linear-gradient(135deg, #ff80ab, #f06292, #c2185b);
+            background-attachment: fixed;
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
 
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
-    scroll-behavior:smooth;
-}
+        canvas { position: fixed; top: 0; left: 0; z-index: -1; }
 
-body{
-    background:linear-gradient(135deg,#ff4e91,#ff8fab,#ffc2d1);
-    color:white;
-    overflow-x:hidden;
-}
+        /* LOADING INTRO */
+        #intro {
+            position: fixed; width: 100%; height: 100vh; background: #000;
+            display: flex; justify-content: center; align-items: center;
+            flex-direction: column; z-index: 2000; animation: fadeOut 2s forwards 3s;
+            color: white;
+        }
+        #intro h1 { font-family: 'Great Vibes', cursive; font-size: clamp(40px, 10vw, 80px); color: var(--hot-pink); }
 
-/* 3D HEART PARTICLE BACKGROUND */
-canvas{
-    position:fixed;
-    top:0;
-    left:0;
-    z-index:-1;
-}
+        /* LOCK SCREEN */
+        #lock {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center; padding: 20px;
+        }
+        #lock h2 { font-family: 'Great Vibes', cursive; font-size: 50px; color: white; margin-bottom: 10px; }
+        #lock p { color: white; margin-bottom: 20px; }
+        input {
+            padding: 15px 25px; border-radius: 50px; border: 2px solid white; width: 100%; max-width: 320px;
+            margin: 10px 0; text-align: center; font-size: 16px; outline: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
 
-/* INTRO WITH BACKGROUND IMAGE */
-#intro{
-    position:fixed;
-    width:100%;
-    height:100vh;
-    background:
-    linear-gradient(rgba(0,0,0,0.6),rgba(0,0,0,0.6)),
-    url('https://images.unsplash.com/photo-1517841905240-472988babdf9');
-    background-size:cover;
-    background-position:center;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    z-index:1000;
-    animation:fadeOut 4s forwards 5s;
-}
+        /* SECTION STYLING */
+        section { padding: 40px 20px; max-width: 800px; margin: 0 auto; text-align: center; }
+        h2 { font-family: 'Great Vibes', cursive; font-size: clamp(38px, 8vw, 55px); color: white; margin-bottom: 25px; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); }
+        
+        .card {
+            background: var(--glass-bg);
+            border-radius: 30px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            margin-bottom: 25px;
+            text-align: left;
+            border-left: 8px solid var(--deep-pink);
+            line-height: 1.7;
+        }
 
-#intro h1{
-    font-family:'Great Vibes',cursive;
-    font-size:60px;
-}
+        /* TIMER BOX */
+        .timer-container {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px;
+        }
+        .timer-item {
+            background: var(--deep-pink); color: white; padding: 15px; border-radius: 20px; text-align: center;
+        }
+        .timer-item span { display: block; font-size: 24px; font-weight: 800; }
 
-@keyframes fadeOut{
-    to{opacity:0; visibility:hidden;}
-}
+        /* 3D GALLERY */
+        .gallery-container { height: 350px; display: flex; justify-content: center; align-items: center; perspective: 1000px; margin: 20px 0; }
+        .carousel { width: 150px; height: 150px; position: relative; transform-style: preserve-3d; animation: rotate 20s infinite linear; }
+        .carousel img {
+            position: absolute; width: 150px; height: 150px; border-radius: 20px;
+            object-fit: cover; border: 4px solid white; transform: rotateY(var(--i)) translateZ(220px);
+        }
 
-section{
-    padding:100px 10%;
-    text-align:center;
-}
+        /* GAME: CATCH MY HEART */
+        #game-container {
+            position: relative; width: 100%; height: 300px; background: #fff0f5;
+            border-radius: 20px; overflow: hidden; border: 3px dashed var(--deep-pink); cursor: crosshair;
+        }
+        .falling-heart { position: absolute; font-size: 25px; cursor: pointer; }
 
-h2{
-    font-family:'Great Vibes',cursive;
-    font-size:50px;
-    margin-bottom:20px;
-}
+        /* BUCKET LIST */
+        .list-item { display: flex; align-items: center; margin-bottom: 15px; background: white; padding: 10px; border-radius: 12px; }
+        .checkbox { width: 25px; height: 25px; border: 2px solid var(--deep-pink); border-radius: 50%; margin-right: 15px; display: flex; justify-content: center; align-items: center; font-weight: bold; }
+        .checked { background: var(--deep-pink); color: white; }
 
-.chapter{
-    background:rgba(255,255,255,0.1);
-    border-radius:20px;
-    padding:40px;
-    backdrop-filter:blur(10px);
-}
+        /* BUTTONS */
+        button {
+            padding: 14px 28px; border-radius: 50px; border: none; 
+            background: var(--deep-pink); color: white;
+            font-weight: 700; cursor: pointer; transition: 0.3s;
+            margin: 8px; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        button:hover { transform: translateY(-3px); filter: brightness(1.2); }
 
-/* TIMELINE */
-.timeline{
-    position:relative;
-    max-width:800px;
-    margin:auto;
-}
+        /* TIMELINE */
+        .timeline { position: relative; padding: 20px 0 20px 40px; text-align: left; }
+        .timeline::before { content: ''; position: absolute; left: 10px; top: 0; bottom: 0; width: 4px; background: white; border-radius: 2px; }
+        .timeline-point { position: relative; margin-bottom: 35px; background: white; padding: 20px; border-radius: 20px; }
+        .timeline-point::before { content: '❤️'; position: absolute; left: -43px; top: 15px; font-size: 20px; }
 
-.timeline::after{
-    content:'';
-    position:absolute;
-    width:4px;
-    background:white;
-    top:0;
-    bottom:0;
-    left:50%;
-}
+        /* VIRTUAL GARDEN */
+        .flower-pot { font-size: 50px; display: inline-block; cursor: pointer; transition: 0.3s; margin: 10px; }
+        .flower-pot:hover { transform: scale(1.2); }
 
-.timeline-item{
-    padding:20px 40px;
-    position:relative;
-    width:50%;
-    animation:fadeIn 2s ease;
-}
+        /* ANIMATIONS */
+        @keyframes rotate { from { transform: rotateY(0); } to { transform: rotateY(360deg); } }
+        @keyframes fadeOut { to { opacity: 0; visibility: hidden; } }
+        .heart-float { position: fixed; pointer-events: none; animation: floatUp 1s forwards; z-index: 5000; font-size: 20px; }
+        @keyframes floatUp { to { transform: translateY(-60px) scale(1.5); opacity: 0; } }
 
-.timeline-item.left{ left:0; }
-.timeline-item.right{ left:50%; }
-
-.timeline-item::after{
-    content:'❤️';
-    position:absolute;
-    top:20px;
-    right:-15px;
-}
-
-.timeline-item.right::after{
-    left:-15px;
-}
-
-/* 3D GALLERY */
-.gallery{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:400px;
-    perspective:1000px;
-}
-
-.carousel{
-    width:200px;
-    height:200px;
-    position:relative;
-    transform-style:preserve-3d;
-    animation:rotate 20s infinite linear;
-}
-
-.carousel img{
-    position:absolute;
-    width:200px;
-    height:200px;
-    border-radius:20px;
-    object-fit:cover;
-}
-
-.carousel img:nth-child(1){ transform:rotateY(0deg) translateZ(300px);}
-.carousel img:nth-child(2){ transform:rotateY(90deg) translateZ(300px);}
-.carousel img:nth-child(3){ transform:rotateY(180deg) translateZ(300px);}
-.carousel img:nth-child(4){ transform:rotateY(270deg) translateZ(300px);}
-
-@keyframes rotate{
-    from{transform:rotateY(0);}
-    to{transform:rotateY(360deg);}
-}
-
-/* BUTTONS */
-button{
-    padding:12px 25px;
-    border:none;
-    border-radius:25px;
-    background:white;
-    color:#ff4e91;
-    font-weight:bold;
-    cursor:pointer;
-    transition:0.3s;
-}
-
-button:hover{
-    transform:scale(1.1);
-}
-
-/* FOOTER */
-footer{
-    padding:50px;
-}
-
-/* MOBILE RESPONSIVENESS */
-@media (max-width:768px){
-    h2{ font-size:40px; }
-    .chapter{ padding:25px; font-size:16px; }
-    .carousel{ width:150px; height:150px; }
-    .carousel img{ width:150px; height:150px; }
-    .timeline-item{ width:100%; padding:15px; }
-    .timeline::after{ left:20px; }
-}
-
-body{
-    background:linear-gradient(135deg,#ff4e91,#ff8fab,#ffc2d1);
-    color:white;
-    overflow-x:hidden;
-}
-
-/* Cinematic Intro */
-#intro{
-    position:fixed;
-    width:100%;
-    height:100vh;
-    background:black;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    z-index:1000;
-    animation:fadeOut 4s forwards 5s;
-}
-
-#intro h1{
-    font-family:'Great Vibes',cursive;
-    font-size:60px;
-    animation:fadeIn 3s ease-in-out;
-}
-
-@keyframes fadeOut{
-    to{opacity:0; visibility:hidden;}
-}
-
-@keyframes fadeIn{
-    from{opacity:0;}
-    to{opacity:1;}
-}
-
-/* Password Lock */
-#lock{
-    text-align:center;
-    padding:100px 20px;
-}
-
-input{
-    padding:10px;
-    border:none;
-    border-radius:20px;
-    width:250px;
-}
-
-button{
-    padding:10px 20px;
-    border:none;
-    border-radius:20px;
-    background:#fff;
-    color:#ff4e91;
-    font-weight:bold;
-    cursor:pointer;
-    margin-top:10px;
-    transition:0.3s;
-}
-
-button:hover{
-    transform:scale(1.1);
-}
-
-section{
-    padding:80px 10%;
-    text-align:center;
-}
-
-h2{
-    font-family:'Great Vibes',cursive;
-    font-size:50px;
-    margin-bottom:20px;
-}
-
-/* Chapter Section */
-.chapter{
-    background:rgba(255,255,255,0.1);
-    border-radius:20px;
-    padding:40px;
-    backdrop-filter:blur(10px);
-    animation:fadeIn 3s ease;
-}
-
-/* 3D Gallery */
-.gallery{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:400px;
-    perspective:1000px;
-}
-
-.carousel{
-    width:200px;
-    height:200px;
-    position:relative;
-    transform-style:preserve-3d;
-    animation:rotate 20s infinite linear;
-}
-
-.carousel img{
-    position:absolute;
-    width:200px;
-    height:200px;
-    border-radius:20px;
-    object-fit:cover;
-}
-
-.carousel img:nth-child(1){ transform:rotateY(0deg) translateZ(300px);}
-.carousel img:nth-child(2){ transform:rotateY(90deg) translateZ(300px);}
-.carousel img:nth-child(3){ transform:rotateY(180deg) translateZ(300px);}
-.carousel img:nth-child(4){ transform:rotateY(270deg) translateZ(300px);}
-
-@keyframes rotate{
-    from{transform:rotateY(0);}
-    to{transform:rotateY(360deg);}
-}
-
-/* Heart Cursor */
-.heart{
-    position:fixed;
-    color:#fff;
-    animation:float 1s linear forwards;
-    pointer-events:none;
-}
-
-@keyframes float{
-    to{
-        transform:translateY(-50px);
-        opacity:0;
-    }
-}
-
-/* Confetti */
-.confetti{
-    position:fixed;
-    width:10px;
-    height:10px;
-    background:white;
-    animation:fall 3s linear infinite;
-}
-
-@keyframes fall{
-    from{transform:translateY(-10px);}
-    to{transform:translateY(100vh);}
-}
-
-footer{
-    padding:40px;
-    text-align:center;
-    font-size:14px;
-}
-</style>
+        @media (min-width: 600px) {
+            .timer-container { grid-template-columns: repeat(4, 1fr); }
+            .carousel img { transform: rotateY(var(--i)) translateZ(300px); }
+            .carousel { width: 200px; height: 200px; }
+            .carousel img { width: 200px; height: 200px; }
+        }
+    </style>
 </head>
-
 <body>
 
 <div id="intro">
     <h1>Ashley ❤️ Francis</h1>
-    <p>Our Love Story Begins...</p>
+    <p>Loading Our Forever Story...</p>
 </div>
 
 <div id="lock">
-    <h2>Only Ashley Can Enter 💖</h2>
-    <input type="password" id="password" placeholder="Enter our secret word">
-    <br>
-    <button onclick="unlock()">Unlock My Your Man's Heart</button>
+    <h2>Hi Beautiful 💖</h2>
+    <p>Enter our special meeting spot to enter (lowercase)</p>
+    <input type="password" id="pass" placeholder="Secret word...">
+    <button onclick="unlock()">Open My Heart</button>
 </div>
 
 <div id="content" style="display:none;">
-
-<section>
-    <h2>Chapter One – The Church</h2>
-    <div class="chapter">
-        <p>
-        It all started at church...  
-        The day I saw you, something shifted in my spirit.  
-        I waited for you to cross the foot bridge and I said take your time.  
-        I didn’t know that small moment would change my entire life.
-        </p>
-        <br>
-        <p>
-        When I gave you my number, I wasn’t just giving digits…  
-        I was opening the door to my future and I never thought you would come into my DM but you did.  
-        And from that very moment, my heart chose you.
-        </p>
-    </div>
-</section>
-
-<section>
-    <h2>Your Dreams 🌟</h2>
-    <p>
-    My beautiful Ashley,  
-    You are doing Social Work now, but I see more in you.  
-    One day you will stand as an Advocate as what you have dreamt since high school.  
-    You will speak boldly.  
-    You will change lives. 
-    You will defend people. 
-    You will win cases and I will be in the court room smilling at you on your victory.
-    And I will stand beside you proud.
-    </p>
-</section>
-
-<section>
-    <h2>US 💞</h2>
-    <div class="gallery">
-        <div class="carousel">
-            <img src="A1.jpeg">
-            <img src="F1.JPG">
-            <img src="A2.jpeg">
-            <img src="F2.jpg">
-            <img src="A3.jpeg">
-            
-            <img src="A4.jpeg">
-            <img src="F4.jpeg">
-            <img src="A5.jpeg">
-           
-          
-            
+    
+    <section>
+        <h2>Every Second With You ⏳</h2>
+        <div class="card" style="text-align: center;">
+            <p style="font-weight: 600; color: var(--deep-pink);">Since we started knowing each other:</p>
+            <div class="timer-container">
+                <div class="timer-item"><span id="days">0</span><label>Days</label></div>
+                <div class="timer-item"><span id="hours">0</span><label>Hours</label></div>
+                <div class="timer-item"><span id="mins">0</span><label>Mins</label></div>
+                <div class="timer-item"><span id="secs">0</span><label>Secs</label></div>
+            </div>
+            <p style="margin-top: 15px;">2 Months, 2 Weeks, and 4 Days of pure love.</p>
         </div>
-    </div>
-</section>
+    </section>
 
-<section>
-    <h2>Special Song 🎶</h2>
-    <button onclick="askSong()">Play Your Beautiful Song</button>
-</section>
-
-<section>
-    <h2>Love Quiz 💘</h2>
-    <p>Where did we meet?</p>
-    <button onclick="quizAnswer(true)">Church</button>
-    <button onclick="quizAnswer(false)">Mall</button>
-    <p id="quizResult"></p>
-</section>
-
-
-
-<canvas id="heartCanvas"></canvas>
-
-
-
-
-
-
-<section>
-    <h2>Our Love Timeline 💞</h2>
-    <div class="timeline">
-        <div class="timeline-item left">
-            The Day I Saw You at Church
+    <section>
+        <h2>A Message For You, Ashley 🌸</h2>
+        <div class="card" style="text-align: center;">
+            <p id="compliment-box" style="font-size: 18px; font-weight: 600; color: var(--deep-pink);">Click below to see how much you mean to me...</p>
+            <button onclick="generateCompliment()" style="margin-top: 20px;">💖 Get a Sweet Note</button>
         </div>
-        <div class="timeline-item right">
-            The Footbridge Wait
+    </section>
+
+    <section>
+        <h2>How It All Started 💫</h2>
+        <div class="card">
+            <h3 style="color: var(--deep-pink); margin-bottom: 10px;">The Church & The Bridge</h3>
+            <p>
+                Ashley, since I saw you in the <b>Church</b>, something shifted. Then we talked at the <b>Footbridge</b> and it was just awesome. 
+                <br><br>
+                Then came those <b>long night conversations</b>—the ones that made your family wonder <i>"What has been on you?"</i>. They didn't know it was love being developed, one late-night laugh at a time.
+            </p>
         </div>
-        <div class="timeline-item left">
-            Giving You My Number
+    </section>
+
+    <section>
+        <h2>Our Beautiful Memories 📸</h2>
+        <div class="gallery-container">
+            <div class="carousel">
+                <img src="A1.jpeg" style="--i:0deg">
+                <img src="F1.JPG" style="--i:60deg">
+                <img src="A2.jpeg" style="--i:120deg">
+                <img src="F2.jpg" style="--i:180deg">
+                <img src="A3.jpeg" style="--i:240deg">
+                <img src="A4.jpeg" style="--i:300deg">
+            </div>
         </div>
-        <div class="timeline-item right">
-            Late Night Conversations
+    </section>
+
+    <section>
+        <h2>Our Future Dreams ✈️</h2>
+        <div class="card">
+            <div class="list-item"><div class="checkbox checked">✓</div><span>See you win your first Case as an Advocate.</span></div>
+            <div class="list-item"><div class="checkbox"></div><span>Travel together to a dream destination.</span></div>
+            <div class="list-item"><div class="checkbox checked">✓</div><span>Talking until 3 AM for the rest of our lives.</span></div>
+            <div class="list-item"><div class="checkbox"></div><span>Building a home filled with laughter and peace.</span></div>
         </div>
-        <div class="timeline-item left">
-            Falling Deep In Love
+    </section>
+
+    <section>
+        <h2>Catch My Love 🎮</h2>
+        <p style="color: white; margin-bottom: 10px;">Click the hearts! Score: <span id="score">0</span></p>
+        <div id="game-container"></div>
+        <button onclick="startGame()" id="start-btn">Start Game</button>
+    </section>
+
+    <section>
+        <h2>Letters For My Advocate 💌</h2>
+        <div class="card">
+            <p id="letter-text">Ashley, click a button to read a letter from my soul...</p>
         </div>
-    </div>
-</section>
+        <button onclick="writeLetter('dream')">Your Dreams</button>
+        <button onclick="writeLetter('love')">My Love</button>
+        <button onclick="writeLetter('future')">Our Future</button>
+    </section>
 
+    <section>
+        <h2>Grow Our Love Garden 🌷</h2>
+        <div class="card" style="text-align: center;">
+            <p>Click the pots to plant flowers for us.</p>
+            <div class="flower-pot" onclick="this.innerHTML='🌷'">🍯</div>
+            <div class="flower-pot" onclick="this.innerHTML='🌹'">🍯</div>
+            <div class="flower-pot" onclick="this.innerHTML='🌸'">🍯</div>
+            <div class="flower-pot" onclick="this.innerHTML='🌻'">🍯</div>
+        </div>
+    </section>
 
+    <section>
+        <h2>Our Love Milestones 📍</h2>
+        <div class="timeline">
+            <div class="timeline-point">
+                <h4 style="color: var(--deep-pink);">The Church</h4>
+                <p>The first time my soul recognized yours.</p>
+            </div>
+            <div class="timeline-point">
+                <h4 style="color: var(--deep-pink);">The Footbridge</h4>
+                <p>The awesome talk that changed everything.</p>
+            </div>
+            <div class="timeline-point">
+                <h4 style="color: var(--deep-pink);">The Long Nights</h4>
+                <p>When love developed and families started asking questions!</p>
+            </div>
+        </div>
+    </section>
 
-<section>
-    <h2>A Letter To You Babe Boo</h2>
-    <div class="chapter">
-        Ashley,  
-        Loving you is not a feeling.  
-        It is a decision I make every single day.  
-        I choose you in the morning.  
-        I choose you at night.  
-        I choose you in every version of my future.
-    </div>
-</section>
-
-<!-- NEW DEEP LOVE SECTIONS START -->
-
-<section>
-    <h2>Our Journey Together 🌸</h2>
-    <div class="chapter">
-        From the church to our daily laughter,  
-        every moment with you is a story worth writing.  
-        Every smile, every glance, every word you speak  
-        has built a universe where only we exist.
-    </div>
-</section>
-
-<section>
-    <h2>Dreams and Promises 🌟</h2>
-    <div class="chapter">
-        I promise to stand by you while you chase your dreams.  
-        From Social Work today to Advocate tomorrow,  
-        I will be your shoulder, your cheer, your unwavering support.  
-        Together we will create a life full of love, adventure, and endless possibilities.
-    </div>
-</section>
-
-<section>
-    <h2>Sweet Love Notes 💌</h2>
-    <div class="chapter">
-        Ashley, every heartbeat reminds me of you.  
-        Every morning I wake, I thank God for you.  
-        You are the music in my silence,  
-        the warmth in my coldest days,  
-        the dream I never want to end. Despite our fights I always pick you.
-    </div>
-</section>
-
-<!-- NEW DEEP LOVE SECTIONS END -->
-
-<footer>
-Forever Yours,  
-<br><strong>Francis Chihwari ❤️</strong>
-</footer>
-
-
+    <footer style="padding: 60px 20px; text-align: center; color: white;">
+        <button onclick="window.open('https://youtu.be/jAYscUn43Ro','_blank')" style="background: white; color: var(--deep-pink);">🎶 Play Our Special Song</button>
+        <br><br>
+        <p>Forever & Always,</p>
+        <h2 style="font-size: 35px;">Francis ❤️ Ashley</h2>
+    </footer>
 </div>
 
+<canvas id="bgCanvas"></canvas>
+
 <script>
-function unlock(){
-    let pass=document.getElementById("password").value;
-    if(pass.toLowerCase()=="footbridge"){
-        document.getElementById("lock").style.display="none";
-        document.getElementById("content").style.display="block";
-        startConfetti();
-    }else{
-        alert("Wrong password 💔 Try again my love.");
+    // 1. UNLOCK
+    function unlock() {
+        const p = document.getElementById('pass').value.toLowerCase().trim();
+        if(p === 'footbridge') {
+            document.getElementById('lock').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+            confettiRain();
+        } else {
+            alert("Think about where we had that awesome talk! ❤️");
+        }
     }
-}
 
-/* Heart Cursor */
-document.addEventListener("mousemove",function(e){
-    let heart=document.createElement("div");
-    heart.className="heart";
-    heart.style.left=e.pageX+"px";
-    heart.style.top=e.pageY+"px";
-    heart.innerHTML="❤️";
-    document.body.appendChild(heart);
-    setTimeout(()=>heart.remove(),1000);
-});
-
-/* Confetti */
-function startConfetti(){
-    for(let i=0;i<50;i++){
-        let conf=document.createElement("div");
-        conf.className="confetti";
-        conf.style.left=Math.random()*100+"vw";
-        conf.style.animationDuration=(Math.random()*3+2)+"s";
-        document.body.appendChild(conf);
+    // 2. TIMER (2 months, 2 weeks, 4 days ago)
+    function getStartDate() {
+        let d = new Date();
+        d.setMonth(d.getMonth() - 2);
+        d.setDate(d.getDate() - (14 + 4)); 
+        return d.getTime();
     }
-}
+    const startTime = getStartDate();
+    setInterval(() => {
+        const now = new Date().getTime();
+        const diff = now - startTime;
+        document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+        document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+        document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+    }, 1000);
 
-/* Song Section */
-function askSong(){
-    let ready=confirm("Are you ready to listen to a heartfelt song?");
-    if(ready){
-        window.open("https://youtu.be/jAYscUn43Ro?list=RDjAYscUn43Ro","_blank");
-    }else{
-        alert("This song carries my heart in every beat ❤️ Please listen my love.");
+    // 3. COMPLIMENTS
+    const compliments = [
+        "Ashley, you are going to be a brilliant Advocate.",
+        "Your laugh is my favorite melody.",
+        "I love how your family wondered about us while we talked all night.",
+        "You are the most beautiful person I have ever met, inside and out.",
+        "I am so proud of your journey in Social Work and Law.",
+        "Meeting you at the church was the start of my happiness."
+    ];
+    function generateCompliment() {
+        document.getElementById('compliment-box').innerText = compliments[Math.floor(Math.random()*compliments.length)];
     }
-}
 
-/* Quiz */
-function quizAnswer(correct){
-    let result=document.getElementById("quizResult");
-    if(correct){
-        result.innerHTML="Correct ❤️ You know our story!";
-    }else{
-        result.innerHTML="Nooo 😅 It was at church!";
+    // 4. LETTERS
+    function writeLetter(type) {
+        const display = document.getElementById('letter-text');
+        const msgs = {
+            dream: "You are currently a Social Worker, but I see the fire in you to be an Advocate. I will be right there in the courtroom watching you win.",
+            love: "My love for you grew in those long night calls. Every word we spoke built a bridge between our hearts that can never be broken.",
+            future: "I see a future where we still talk until the sun comes up, except we'll be in our own home, safe in each other's arms."
+        };
+        display.innerText = msgs[type];
     }
-}
 
-/* 3D HEART PARTICLES */
-const canvas=document.getElementById("heartCanvas");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+    // 5. GAME
+    let score = 0;
+    let gameRunning = false;
+    function startGame() {
+        if(gameRunning) return;
+        gameRunning = true; score = 0;
+        document.getElementById('score').innerText = score;
+        let timer = setInterval(createHeart, 800);
+        setTimeout(() => { clearInterval(timer); gameRunning = false; alert("You caught " + score + " hearts! Each one is a kiss from me."); }, 15000);
+    }
+    function createHeart() {
+        const container = document.getElementById('game-container');
+        const h = document.createElement('div');
+        h.className = 'falling-heart'; h.innerHTML = '❤️';
+        h.style.left = Math.random() * (container.clientWidth - 30) + 'px';
+        h.style.top = '-30px'; container.appendChild(h);
+        let pos = -30;
+        let id = setInterval(() => {
+            if(pos >= 300) { clearInterval(id); h.remove(); }
+            else { pos += 2; h.style.top = pos + 'px'; }
+        }, 20);
+        h.onclick = () => { score++; document.getElementById('score').innerText = score; h.innerHTML = '✨'; clearInterval(id); setTimeout(() => h.remove(), 100); };
+    }
 
-let hearts=[];
-for(let i=0;i<100;i++){
-    hearts.push({
-        x:Math.random()*canvas.width,
-        y:Math.random()*canvas.height,
-        size:Math.random()*5+2,
-        speed:Math.random()*1+0.5
-    });
-}
+    // 6. BACKGROUND & EFFECTS
+    const canvas = document.getElementById('bgCanvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+    let particles = [];
+    for(let i=0; i<60; i++) particles.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, r: Math.random()*3+1, s: Math.random()*0.5+0.2});
+    function animate() {
+        ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle = "rgba(255,255,255,0.4)";
+        particles.forEach(p => { ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fill(); p.y -= p.s; if(p.y < 0) p.y = canvas.height; });
+        requestAnimationFrame(animate);
+    }
+    animate();
 
-function drawHearts(){
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    hearts.forEach(h=>{
-        ctx.fillStyle="rgba(255,255,255,0.6)";
-        ctx.beginPath();
-        ctx.arc(h.x,h.y,h.size,0,Math.PI*2);
-        ctx.fill();
-        h.y-=h.speed;
-        if(h.y<0) h.y=canvas.height;
-    });
-    requestAnimationFrame(drawHearts);
-}
-drawHearts();
+    function confettiRain() {
+        for(let i=0; i<40; i++) {
+            const c = document.createElement('div');
+            c.style.position = 'fixed'; c.style.left = Math.random()*100+'vw'; c.style.top = '-20px';
+            c.innerHTML = '❤️'; c.style.zIndex = '3000';
+            c.animate([{transform: 'translateY(0)'}, {transform: 'translateY(100vh) rotate(360deg)'}], {duration: Math.random()*3000+2000});
+            document.body.appendChild(c);
+        }
+    }
 </script>
-
 </body>
 </html>
